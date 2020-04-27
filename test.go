@@ -36,5 +36,5 @@ func main() {
 }
 
 func describe(i I) {
-	fmt.Printf("(%v, %T)\n", i, i, i)
+	fmt.Printf("(%v, %T)\n", i, i)
 }
