@@ -25,30 +25,19 @@ func goWalk(t *tree.Tree, ch chan int) {
 func Same(t1, t2 *tree.Tree) bool {
 	ch1 := make(chan int, 100)
 	ch2 := make(chan int, 100)
-	var t1_list []int
-	var t2_list []int
-
 
 	go goWalk(t1, ch1)
 	go goWalk(t2, ch2)
 
-	for v1 := range ch1 {
-		t1_list = append(t1_list, v1)
-	}
-
-	for v2 := range ch2 {
-		t2_list = append(t2_list, v2)
-	}
-
-	if (len(t1_list) != len(t2_list)) {
-		return false
-	}
-
-
-
-	for i, _ := range t1_list {
-		if (t1_list[i] != t2_list[i]) {
+	for {
+		v1, ok1 := <-ch1
+		v2, ok2 := <-ch2
+		if (ok1 != ok2 || v1 != v2) {
 			return false
+		}
+
+		if (ok1 == false) {
+			break;
 		}
 	}
 
